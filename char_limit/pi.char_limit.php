@@ -28,7 +28,7 @@ in this Software without prior written authorization from EllisLab, Inc.
 
 $plugin_info = array(
 						'pi_name'			=> 'Character Limiter',
-						'pi_version'		=> '1.1',
+						'pi_version'		=> '1.2',
 						'pi_author'			=> 'Rick Ellis',
 						'pi_author_url'		=> 'http://expressionengine.com/',
 						'pi_description'	=> 'Permits you to limit the number of characters in some text',
