@@ -60,18 +60,10 @@ class Char_limit {
 
 		$total = ( ! $this->EE->TMPL->fetch_param('total')) ? 500 :  $this->EE->TMPL->fetch_param('total');		
 		$total = ( ! is_numeric($total)) ? 500 : $total;
-
-		$type = $this->EE->TMPL->fetch_param('type', 'normal');	
 		
 		$str = ($str == '') ? $this->EE->TMPL->tagdata : $str;
-		
-		//what kind of limit?
-		switch($type)
-		{
-			case 'normal' : $this->return_data = $this->EE->functions->char_limiter($str, $total); break;
-			case 'exact' : $this->return_data = substr($str, 0, $total); break;
-			default: $this->return_data = $str;
-		} 		
+				
+ 		$this->return_data = $this->EE->functions->char_limiter($str, $total);
 	}
 
 	// --------------------------------------------------------------------
@@ -90,7 +82,7 @@ class Char_limit {
 		?>
 		Wrap anything you want to be processed between the tag pairs.
 
-		{exp:char_limit total="100" type="normal[OR]exact"}
+		{exp:char_limit total="100"}
 
 		text you want processed
 
