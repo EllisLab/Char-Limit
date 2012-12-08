@@ -62,7 +62,7 @@ class Char_limit {
 		$total = ( ! is_numeric($total)) ? 500 : $total;
 
 		//exact truncation
-		$exact = $this->EE->TMPL->fetch_param('total', 'no');
+		$exact = $this->EE->TMPL->fetch_param('exact', 'no');
 		
 		$str = ($str == '') ? $this->EE->TMPL->tagdata : $str;
 				
