@@ -60,10 +60,13 @@ class Char_limit {
 
 		$total = ( ! $this->EE->TMPL->fetch_param('total')) ? 500 :  $this->EE->TMPL->fetch_param('total');		
 		$total = ( ! is_numeric($total)) ? 500 : $total;
+
+		//exact truncation
+		$exact = $this->EE->TMPL->fetch_param('total', 'no');
 		
 		$str = ($str == '') ? $this->EE->TMPL->tagdata : $str;
 				
- 		$this->return_data = $this->EE->functions->char_limiter($str, $total);
+ 		$this->return_data = in_array($exact, array('yes', 'y')) ? substr($str, 0, $total) : $this->EE->functions->char_limiter($str, $total);
 	}
 
 	// --------------------------------------------------------------------
@@ -82,15 +85,20 @@ class Char_limit {
 		?>
 		Wrap anything you want to be processed between the tag pairs.
 
-		{exp:char_limit total="100"}
+		{exp:char_limit total="100" exact="no"}
 
 		text you want processed
 
 		{/exp:char_limit}
 
 		The "total" parameter lets you specify the number of characters.
+		The "exact" parameter will truncate the string exact to the "limit"
 
-		Note: This tag will always leave entire words intact so you may get a few additional characters than what you specify.  
+		Note: When exact="no" this tag will always leave entire words intact so you may get a few additional characters than what you specify.  
+
+		Version 1.2
+		******************
+		- Add "exact" parameter
 
 		Version 1.1
 		******************
