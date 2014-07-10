@@ -13,12 +13,9 @@ The "exact" parameter will truncate the string exact to the "limit"
 
 Note: When exact="no" this tag will always leave entire words intact so you may get a few additional characters than what you specify.
 
-Version 1.2
-******************
-- Add "exact" parameter
+## Change Log
 
-Version 1.1
-******************
-- Updated plugin to be 2.0 compatible
-
-
+- Version 1.2
+    - Add "exact" parameter
+- Version 1.1
+    - Updated plugin to be 2.0 compatible
