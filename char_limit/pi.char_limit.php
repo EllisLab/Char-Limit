@@ -28,7 +28,7 @@ in this Software without prior written authorization from EllisLab, Inc.
 
 $plugin_info = array(
 						'pi_name'			=> 'Character Limiter',
-						'pi_version'		=> '1.2',
+						'pi_version'		=> '1.3',
 						'pi_author'			=> 'Rick Ellis',
 						'pi_author_url'		=> 'http://expressionengine.com/',
 						'pi_description'	=> 'Permits you to limit the number of characters in some text',
@@ -49,7 +49,7 @@ class Char_limit {
 
 	var $return_data;
 
-	
+
 	/**
 	 * Constructor
 	 *
@@ -58,24 +58,35 @@ class Char_limit {
 	{
 		$this->EE =& get_instance();
 
-		$total = ( ! $this->EE->TMPL->fetch_param('total')) ? 500 :  $this->EE->TMPL->fetch_param('total');		
+		$total = ( ! $this->EE->TMPL->fetch_param('total')) ? 500 :  $this->EE->TMPL->fetch_param('total');
 		$total = ( ! is_numeric($total)) ? 500 : $total;
 
 		//exact truncation
 		$exact = $this->EE->TMPL->fetch_param('exact', 'no');
 		$strip_tags = $this->EE->TMPL->fetch_param('strip_tags', 'no');
-		
+		$force_elipses = $this->EE->TMPL->fetch_param('force_elipses', 'no');
+
 		$str = ($str == '') ? $this->EE->TMPL->tagdata : $str;
 
 		if ($strip_tags == 'yes') {
 			$str = strip_tags($str);
 		}
-				
- 		$this->return_data = in_array($exact, array('yes', 'y')) ? substr($str, 0, $total) : $this->EE->functions->char_limiter($str, $total);
+
+		if (in_array($exact, array('yes', 'y'))) {
+			if ((strlen($str) > $total) AND in_array($force_elipses, array('yes', 'y'))) {
+				$str = trim(substr($str, 0, $total)).'&#8230;';
+			} else {
+				$str = substr($str, 0, $total);
+			}
+		} else {
+			$str = $this->EE->functions->char_limiter($str, $total);
+		}
+
+ 		$this->return_data = $str;
 	}
 
 	// --------------------------------------------------------------------
-	
+
 	/**
 	 * Usage
 	 *
@@ -86,7 +97,7 @@ class Char_limit {
 	 */
 	public static function usage()
 	{
-		ob_start(); 
+		ob_start();
 		?>
 		Wrap anything you want to be processed between the tag pairs.
 
@@ -99,8 +110,13 @@ class Char_limit {
 		The "total" parameter lets you specify the number of characters.
 		The "exact" parameter will truncate the string exact to the "limit"
 		The "strip_tags" parameter will remove any HTML tags from the input string
+		The "force_elipses" parameter will add elipses to the output when exact is used and the result is trimmed
 
-		Note: When exact="no" this tag will always leave entire words intact so you may get a few additional characters than what you specify.  
+		Note: When exact="no" this tag will always leave entire words intact so you may get a few additional characters than what you specify.
+
+		Version 1.3
+		******************
+		- Add "force_elipses" parameter
 
 		Version 1.2
 		******************
@@ -112,12 +128,12 @@ class Char_limit {
 
 		<?php
 		$buffer = ob_get_contents();
-	
-		ob_end_clean(); 
+
+		ob_end_clean();
 
 		return $buffer;
 	}
-	
+
 	// --------------------------------------------------------------------
 
 }
