@@ -64,7 +64,7 @@ class Char_limit {
 		//exact truncation
 		$exact = $this->EE->TMPL->fetch_param('exact', 'no');
 		$strip_tags = $this->EE->TMPL->fetch_param('strip_tags', 'no');
-		$force_elipses = $this->EE->TMPL->fetch_param('force_elipses', 'no');
+		$force_ellipses = $this->EE->TMPL->fetch_param('force_ellipses', 'no');
 
 		$str = ($str == '') ? $this->EE->TMPL->tagdata : $str;
 
@@ -73,7 +73,7 @@ class Char_limit {
 		}
 
 		if (in_array($exact, array('yes', 'y'))) {
-			if ((strlen($str) > $total) AND in_array($force_elipses, array('yes', 'y'))) {
+			if ((strlen($str) > $total) AND in_array($force_ellipses, array('yes', 'y'))) {
 				$str = trim(substr($str, 0, $total)).'&#8230;';
 			} else {
 				$str = substr($str, 0, $total);
@@ -110,13 +110,13 @@ class Char_limit {
 		The "total" parameter lets you specify the number of characters.
 		The "exact" parameter will truncate the string exact to the "limit"
 		The "strip_tags" parameter will remove any HTML tags from the input string
-		The "force_elipses" parameter will add elipses to the output when exact is used and the result is trimmed
+		The "force_ellipses" parameter will add ellipses to the output when exact is used and the result is trimmed
 
 		Note: When exact="no" this tag will always leave entire words intact so you may get a few additional characters than what you specify.
 
 		Version 1.3
 		******************
-		- Add "force_elipses" parameter
+		- Add "force_ellipses" parameter
 
 		Version 1.2
 		******************
