@@ -68,17 +68,24 @@ class Char_limit {
 
 		$str = ($str == '') ? $this->EE->TMPL->tagdata : $str;
 
-		if ($strip_tags == 'yes') {
+		if ($strip_tags == 'yes')
+		{
 			$str = strip_tags($str);
 		}
 
-		if (in_array($exact, array('yes', 'y'))) {
-			if ((strlen($str) > $total) AND in_array($force_ellipses, array('yes', 'y'))) {
+		if (in_array($exact, array('yes', 'y')))
+		{
+			if ((strlen($str) > $total) AND in_array($force_ellipses, array('yes', 'y')))
+			{
 				$str = trim(substr($str, 0, $total)).'&#8230;';
-			} else {
+			}
+			else
+			{
 				$str = substr($str, 0, $total);
 			}
-		} else {
+		}
+		else
+		{
 			$str = $this->EE->functions->char_limiter($str, $total);
 		}
 
