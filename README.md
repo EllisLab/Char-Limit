@@ -14,7 +14,8 @@ The "force_ellipses" parameter will add ellipses to the output when exact is use
 Note: When exact="no" this tag will always leave entire words intact so you may get a few additional characters than what you specify.
 
 ## Change Log
-
+- 2.0
+    - Support EE3
 - 1.3
 	- Add "force_ellipses" parameter
 - 1.2
