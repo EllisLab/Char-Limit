@@ -47,19 +47,39 @@ class Char_limit {
 	 */
 	function __construct($str = '')
 	{
-		$this->EE =& get_instance();
-
-		$total = ( ! $this->EE->TMPL->fetch_param('total')) ? 500 :  $this->EE->TMPL->fetch_param('total');
+		$total = ( ! ee()->TMPL->fetch_param('total')) ? 500 :  ee()->TMPL->fetch_param('total');
 		$total = ( ! is_numeric($total)) ? 500 : $total;
 
 		//exact truncation
-		$exact = $this->EE->TMPL->fetch_param('exact', 'no');
+		$exact = ee()->TMPL->fetch_param('exact', 'no');
+		$strip_tags = ee()->TMPL->fetch_param('strip_tags', 'no');
+		$force_ellipses = ee()->TMPL->fetch_param('force_ellipses', 'no');
 
-		$str = ($str == '') ? $this->EE->TMPL->tagdata : $str;
+		$str = ($str == '') ? ee()->TMPL->tagdata : $str;
 
- 		$this->return_data = in_array($exact, array('yes', 'y')) ? substr($str, 0, $total) : $this->EE->functions->char_limiter($str, $total);
+		if ($strip_tags == 'yes')
+		{
+			$str = strip_tags($str);
+		}
+
+		if (in_array($exact, array('yes', 'y')))
+		{
+			if ((strlen($str) > $total) AND in_array($force_ellipses, array('yes', 'y')))
+			{
+				$str = trim(substr($str, 0, $total)).'&#8230;';
+			}
+			else
+			{
+				$str = substr($str, 0, $total);
+			}
+		}
+		else
+		{
+			$str = ee()->functions->char_limiter($str, $total);
+		}
+
+ 		$this->return_data = $str;
 	}
-
 }
 // END CLASS
 
