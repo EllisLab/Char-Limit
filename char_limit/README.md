@@ -15,6 +15,9 @@ Note: When exact="no" this tag will always leave entire words intact so you may 
 
 ## Change Log
 
+- 2.0.1
+	- Added add-on icon
+	- Updated License information
 - 2.0
 	- Updated plugin to be 3.0 compatible
 - 1.3
